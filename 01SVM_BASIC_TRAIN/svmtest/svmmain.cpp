@@ -1,9 +1,9 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/ml/ml.hpp>
-
+#include <iostream>
 using namespace cv;
-
+using namespace std;
 int main()
 {
     // 用于保存可视化数据的矩阵
@@ -12,11 +12,16 @@ int main()
 
     // 创建一些训练样本
     float labels[4] = {1.0, -1.0, -1.0, -1.0};
-    Mat labelsMat(3, 1, CV_32FC1, labels);
+    Mat labelsMat(5, 1, CV_32FC1, labels);
 
     float trainingData[4][2] = { {501, 10}, {255, 10}, {501, 255}, {10, 501} };
-    Mat trainingDataMat(3, 2, CV_32FC1, trainingData);
-
+    Mat trainingDataMat(5, 2, CV_32FC1, trainingData);
+	//imshow("trainingDataMat",trainingDataMat);
+	//cout<<trainingDataMat.size()<<endl;
+	/*for (int i=0;i<trainingDataMat.size();i++)
+	{
+		cout<<trainingDataMat.data[i]<<endl;
+	}*/
     // 设置SVM参数
     CvSVMParams params;
     params.svm_type    = CvSVM::C_SVC;
@@ -48,8 +53,12 @@ int main()
     circle( image, Point(255,  10), 5, Scalar(255, 255, 255), thickness, lineType);
     circle( image, Point(501, 255), 5, Scalar(255, 255, 255), thickness, lineType);
     circle( image, Point( 10, 501), 5, Scalar(255, 255, 255), thickness, lineType);
+	/*imwrite("result.png", image);       
 
+	imshow("简单SVM分类", image); 
+	waitKey(0);*/
     // 绘制支持向量
+	
     thickness = 2;
     lineType  = 8;
     int c     = SVM.get_support_vector_count();
